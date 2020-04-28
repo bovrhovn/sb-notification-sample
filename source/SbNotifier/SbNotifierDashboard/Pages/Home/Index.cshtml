@@ -1,0 +1,20 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+<h1 class="display-4">Welcome to notifier dashboard</h1>
+<p>In order to send notification, please use the following options:</p>
+<ul>
+    <li>
+        Send notification with <a href="https://docs.microsoft.com/en-us/azure/notification-hubs/">Azure Notification Hub</a> - click <a asp-page="/Notification/Notify">here</a>
+    </li>
+    <li>
+        Use IoT Hub and <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-csharp-csharp-schedule-jobs">broadcast</a> - click <a asp-page="/Notification/Iot">here</a>
+    </li>
+    <li>
+        Check notification history and response - click <a asp-page="/Notification/History">here</a>
+    </li>
+</ul>
