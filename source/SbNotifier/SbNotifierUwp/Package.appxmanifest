@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="9924836e-d7cf-493b-82f1-df238f8fb7c7"
-    Publisher="CN=bojan"
+    Name="39109bojanv.sbnotifierwin"
+    Publisher="CN=2389123F-66AB-4165-95B7-7B050D3AD323"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="9924836e-d7cf-493b-82f1-df238f8fb7c7" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="b099146d-8e44-487d-a0c2-039cc68dc942" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>SbNotifierUwp</DisplayName>
-    <PublisherDisplayName>bojan</PublisherDisplayName>
+    <DisplayName>sbnotifierwin</DisplayName>
+    <PublisherDisplayName>bojanv</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -32,10 +32,10 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="SbNotifierUwp.App">
       <uap:VisualElements
-        DisplayName="SbNotifierUwp"
+        DisplayName="Service Bus Notifier App Sample"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="SbNotifierUwp"
+        Description="Service Bus Notifier App Sample to demonstrate, how to use notification hub with bridge option"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />

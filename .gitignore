@@ -348,3 +348,6 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/source/SbNotifier/.idea/.idea.SbNotifier/.idea
+/.idea/.idea.sb-notification-sample.dir
+/source/SbNotifier/.idea/.idea.SbNotifier
