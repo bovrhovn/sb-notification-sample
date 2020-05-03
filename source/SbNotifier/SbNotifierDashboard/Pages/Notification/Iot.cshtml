@@ -8,6 +8,11 @@
 <h1>
     Check devices and enter message at device info to send message to it
 </h1>
+
+<p class="text-success font-weight-bold text-xl-left">
+    @Model.InfoText
+</p>
+
 @if (Model.Devices.Any())
 {
     <table class="table table-hover">
@@ -50,4 +55,8 @@
         }
         </tbody>
     </table>
+}
+else
+{
+    <p class="text-info">No devices registered! Check Iot hub.</p>
 }

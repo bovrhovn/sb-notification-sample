@@ -25,9 +25,8 @@ namespace SbNotifierDashboard.Pages.Notification
         public List<DeviceInfo> Devices { get; private set; } = new List<DeviceInfo>();
 
         [BindProperty] public string DeviceId { get; set; }
-
         [BindProperty] public string Message { get; set; }
-        [BindProperty] public string InfoText { get; set; }
+        [BindProperty, TempData] public string InfoText { get; private set; }
 
         public async Task OnGetAsync()
         {
