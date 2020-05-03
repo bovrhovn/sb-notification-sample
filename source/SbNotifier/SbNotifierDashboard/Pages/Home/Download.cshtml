@@ -1,0 +1,35 @@
+@page
+@model SbNotifierDashboard.Pages.Home.DownloadPageIndex
+
+@{
+    ViewData["Title"] = "Dowload update";    
+}
+
+<h1>Check update and download the rigth one</h1>
+<p>
+    This page show updates and enables you to download update
+</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Update</th>
+        <th scope="col">Published date</th>
+        <th scope="col">Download link</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row">1</th>
+        <td>Update 1</td>
+        <td>@DateTime.Now.AddDays(-30)</td>
+        <td>https://downloadme.com</td>
+    </tr>
+    <tr>
+        <th scope="row">2</th>
+        <td>Update 2</td>
+        <td>@DateTime.Now</td>
+        <td>https://downloadme.com</td>
+    </tr>
+    </tbody>
+</table>

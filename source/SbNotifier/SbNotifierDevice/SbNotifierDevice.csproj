@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <UseWPF>true</UseWPF>
+        <PackageVersion>1.0.1</PackageVersion>
+        <Title>Sb Notifier Device Demo</Title>
+        <Authors>Bojan Vrhovnik</Authors>
+        <Description>sample app to demonstrate how to use Device to register and to communicate with IotHub</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Azure.Devices" Version="1.20.1" />
+      <PackageReference Include="Microsoft.Azure.Devices.Client" Version="1.25.0" />
+    </ItemGroup>
+
+</Project>

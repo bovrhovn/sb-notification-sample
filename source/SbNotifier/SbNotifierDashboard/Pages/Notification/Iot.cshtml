@@ -6,5 +6,48 @@
 }
 
 <h1>
-    Use below form to send broadcast notification
+    Check devices and enter message at device info to send message to it
 </h1>
+@if (Model.Devices.Any())
+{
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var deviceInfo in Model.Devices)
+        {
+            <tr>
+                <td>
+                    @deviceInfo.Id
+                </td>
+                <td>
+                    @deviceInfo.Name
+                </td>
+                <td>
+                    <div class="input-group">
+                        <input type="hidden" asp-for="DeviceId" />
+                        <form method="post">
+                            <input type="text"
+                                   asp-for="Message"
+                                   class="form-control"
+                                   placeholder="Message"
+                                   aria-label="Message"
+                                   aria-describedby="button-addon4">
+                            <div class="input-group-append"
+                                 id="button-addon4">
+                                <button class="btn btn-outline-secondary"
+                                        type="button">Send</button>
+                            </div>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

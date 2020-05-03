@@ -1,6 +1,6 @@
 namespace SbNotifierDashboard.Options
 {
-    public class NotificationHubOptions : Options
+    public class IotOptions : Options
     {
         
     }

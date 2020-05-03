@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Azure.NotificationHubs;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json.Linq;
 using SbNotifierDashboard.Helpers;
 using SbNotifierDashboard.Options;
 
@@ -13,7 +12,7 @@ namespace SbNotifierDashboard.Pages.Notification
     {
         public NotifyPageModel(IOptions<NotificationHubOptions> nhOptions) =>
             notificationHub = NotificationHubClient
-                .CreateClientFromConnectionString(nhOptions.Value.ConnectionString, nhOptions.Value.HubName);
+                .CreateClientFromConnectionString(nhOptions.Value.ConnectionString, nhOptions.Value.Name);
 
         [BindProperty] public string Text { get; set; }
 
