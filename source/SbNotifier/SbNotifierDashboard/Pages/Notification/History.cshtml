@@ -9,6 +9,67 @@
     See messages as they flow to devices
 </h1>
 
-//TODO: USE SIGNALR to SHOW data as they are sent to device and back
+<div id="messages"></div>
 
+@section Scripts
+{
+     <script type="text/javascript" src="~/js/signalr.min.js"></script>
+    
+        <!--Add script to update the page and send messages.-->
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function () {
+                 function createMessageEntry(encodedName, encodedMsg) {
+                                const entry = document.createElement('div');
+                                entry.classList.add("message-entry");
+                                if (encodedName === "_SYSTEM_") {
+                                    entry.innerHTML = encodedMsg;
+                                    entry.classList.add("text-center");
+                                    entry.classList.add("system-message");
+                                } else if (encodedName === "_BROADCAST_") {
+                                    entry.classList.add("text-center");
+                                    entry.innerHTML = `<div class="text-center broadcast-message">${encodedMsg}</div>`;
+                                } else {
+                                    entry.innerHTML = `<div class="message-avatar pull-left">${encodedName}</div>` +
+                                        `<div class="message-content pull-left">${encodedMsg}<div>`;
+                                }
+                                return entry;
+                 }
+                 
+                 function bindConnectionMessage(connection) {
+                    var messageCallback = function(name, message) {
+                        if (!message) return;
+                        // Html encode display name and message.
+                        var encodedName = "_BROADCAST_";
+                        var encodedMsg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                        var messageEntry = createMessageEntry(encodedName, encodedMsg);
+                                    
+                        var messageBox = document.getElementById('messages');
+                        messageBox.appendChild(messageEntry);
+                        messageBox.scrollTop = messageBox.scrollHeight;
+                    };
+                    // Create a function that the hub can call to broadcast messages.
+                    connection.on('broadcastMessage', messageCallback);
+                    connection.onclose(onConnectionError);
+                }
+                      
+                function onConnectionError(error) {
+                    if (error && error.message) {
+                        console.error(error.message);
+                    }
+                    var modal = document.getElementById('myModal');
+                    modal.classList.add('in');
+                    modal.style = 'display: block;';
+                }
+    
+                var connection = new signalR.HubConnectionBuilder()
+                                            .withUrl('/notification')
+                                            .build();
+                bindConnectionMessage(connection);
+                connection.start()
+                     .catch(function (error) {
+                        console.error(error.message);
+                    });
+            });
+        </script>
+}
 
