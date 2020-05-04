@@ -1,0 +1,57 @@
+@page
+@model SbNotifierDashboard.Pages.Notification.CloudMessagePageModel
+
+@{
+    ViewData["Title"] = "Send cloud to device messages";
+}
+
+<h1>
+    Check devices and enter message for device to send message to it
+</h1>
+
+<p class="text-success font-weight-bold text-xl-left">
+    @Model.InfoText
+</p>
+<div class="col-md-12 mb-3">
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="Message">Enter message</label>
+            <input type="text" class="form-control" asp-for="Message">
+        </div>
+          <div class="form-group">
+            <label asp-for="DeviceId">Device ID</label>
+              <input type="text" class="form-control" asp-for="DeviceId"/>
+              <small id="DeviceIdHelp" class="form-text text-muted">below you will find device id's of the devices</small>
+          </div>
+        <button type="submit" class="btn btn-primary">Send message</button>
+    </form>
+</div>
+
+@if (Model.Devices.Any())
+{
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var deviceInfo in Model.Devices)
+        {
+            <tr>
+                <td>
+                    @deviceInfo.Id
+                </td>
+                <td>
+                    @deviceInfo.Name
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-info">No devices registered! Check Iot hub.</p>
+}

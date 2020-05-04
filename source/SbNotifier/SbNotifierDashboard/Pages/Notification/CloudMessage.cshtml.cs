@@ -1,22 +1,21 @@
-using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Azure.Devices;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using SbNotifierDashboard.Models;
 using SbNotifierDashboard.Options;
 
 namespace SbNotifierDashboard.Pages.Notification
 {
-    public class IotPageModel : PageModel
+    public class CloudMessagePageModel : PageModel
     {
         private readonly RegistryManager registryManager;
         private readonly ServiceClient serviceClient;
 
-        public IotPageModel(IOptions<IotOptions> optionsValue)
+        public CloudMessagePageModel(IOptions<IotOptions> optionsValue)
         {
             var valueConnectionString = optionsValue.Value.ConnectionString;
             registryManager = RegistryManager.CreateFromConnectionString(valueConnectionString);
@@ -53,23 +52,10 @@ namespace SbNotifierDashboard.Pages.Notification
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var methodInvocation = new CloudToDeviceMethod("UpdateRequested")
-                {ResponseTimeout = TimeSpan.FromSeconds(30)};
-            string message =
-                $"{Message} - here is the download option - http://https://sbwebdashboard.azurewebsites.net/download";
-            var json = JsonConvert.SerializeObject(message);
-            methodInvocation.SetPayloadJson(json);
-
-            try
-            {
-                var response = await serviceClient.InvokeDeviceMethodAsync(DeviceId, methodInvocation);
-                InfoText = $"Response status: {response.Status}, payload:{response.GetPayloadAsJson()}";
-            }
-            catch (Exception e)
-            {
-                InfoText = $"Message was not delivered!{Environment.NewLine}{e.Message}";
-            }
-            return RedirectToPage("Iot");
+            var commandMessage = new Message(Encoding.ASCII.GetBytes(Message));
+            //var commandMessage = new Message(Encoding.ASCII.GetBytes(Message)) {Ack = DeliveryAcknowledgement.Full};
+            await serviceClient.SendAsync(DeviceId, commandMessage);
+            return RedirectToPage("CloudMessage");
         }
     }
 }
