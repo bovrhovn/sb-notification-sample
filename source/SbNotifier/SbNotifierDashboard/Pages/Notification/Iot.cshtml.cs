@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Azure.Devices;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using SbNotifierDashboard.Models;
 using SbNotifierDashboard.Options;
 
@@ -54,11 +55,19 @@ namespace SbNotifierDashboard.Pages.Notification
         {
             var methodInvocation = new CloudToDeviceMethod("UpdateRequested")
                 {ResponseTimeout = TimeSpan.FromSeconds(30)};
-            methodInvocation.SetPayloadJson($"{Message} - http://https://sbwebdashboard.azurewebsites.net/download");
+            string message = Message + "http://https://sbwebdashboard.azurewebsites.net/download";
+            var json = JsonConvert.SerializeObject(message);
+            methodInvocation.SetPayloadJson(json);
 
-            var response = await serviceClient.InvokeDeviceMethodAsync(DeviceId, methodInvocation);
-
-            InfoText = $"Response status: {response.Status}, payload:{response.GetPayloadAsJson()}";
+            try
+            {
+                var response = await serviceClient.InvokeDeviceMethodAsync(DeviceId, methodInvocation);
+                InfoText = $"Response status: {response.Status}, payload:{response.GetPayloadAsJson()}";
+            }
+            catch (Exception e)
+            {
+                InfoText = $"Message was not delivered!{Environment.NewLine}{e.Message}";
+            }
             return Page();
         }
     }

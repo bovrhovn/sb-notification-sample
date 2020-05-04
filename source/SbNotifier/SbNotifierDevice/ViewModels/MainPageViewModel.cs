@@ -23,10 +23,21 @@ namespace SbNotifierDevice.ViewModels
         public async Task RegisterDeviceAsync()
         {
             var registryManager = RegistryManager.CreateFromConnectionString(Constants.IotHubConnectionString);
-            var device = await registryManager.GetDeviceAsync(deviceId) ??
-                         await registryManager.AddDeviceAsync(new Device(deviceId));
-            InfoMessage +=
-                $"Device registered and is {(device.ConnectionState == DeviceConnectionState.Connected ? "connected" : "disconnected")}{Environment.NewLine}";
+            if (string.IsNullOrEmpty(DeviceId))
+            {
+                InfoMessage = $"Device ID not specified! Enter name and press Connect!{Environment.NewLine}";
+            }
+            else
+            {
+                var device = await registryManager.GetDeviceAsync(deviceId) ??
+                             await registryManager.AddDeviceAsync(new Device(deviceId));
+                InfoMessage =
+                    $"Device registered and is {(device.ConnectionState == DeviceConnectionState.Connected ? "connected" : "disconnected")}{Environment.NewLine}";
+
+                var deviceClient = DeviceClient.CreateFromConnectionString(Constants.IotHubConnectionString, DeviceId,
+                    TransportType.Mqtt);
+                await deviceClient.SetMethodHandlerAsync("UpdateRequested", UpdateRequestedMethod, null);
+            }
         }
 
         public string DeviceId
@@ -42,13 +53,6 @@ namespace SbNotifierDevice.ViewModels
 
         public ICommand RegisterCommand { get; private set; }
 
-        public async Task RegisterDeviceMethodCallAsync()
-        {
-            var deviceClient = DeviceClient.CreateFromConnectionString(Constants.IotHubConnectionString,
-                TransportType.Mqtt);
-            await deviceClient.SetMethodHandlerAsync("UpdateRequested", UpdateRequestedMethod, null);
-        }
-
         private Task<MethodResponse> UpdateRequestedMethod(MethodRequest methodRequest, object userContext)
         {
             var data = Encoding.UTF8.GetString(methodRequest.Data);
@@ -61,7 +65,7 @@ namespace SbNotifierDevice.ViewModels
             }
             else
             {
-                InfoMessage = $"Data received: {data}{Environment.NewLine}"; 
+                InfoMessage = $"Data received: {data}{Environment.NewLine}";
                 var result = "{\"result\":\"Executed direct method: " + methodRequest.Name + "\"}";
                 return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 200));
             }

@@ -13,14 +13,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="80" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="300" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
         <TextBlock Text="Welcome to Device Simulation"
                    VerticalAlignment="Top" HorizontalAlignment="Left"
                    Margin="5,10,5,10"
                    FontWeight="SemiBold" Grid.Row="0" Grid.Column="0" />
-        <StackPanel Orientation="Horizontal" Margin="0,5,5,5"
+        <StackPanel Orientation="Horizontal" Margin="5"
                     Grid.Row="1"
                     Grid.ColumnSpan="2"
                     Grid.Column="0"
@@ -31,14 +31,17 @@
             <Button Content="Connect" Command="{Binding RegisterCommand}" Width="100" VerticalAlignment="Center" />
         </StackPanel>
         <TextBox Text="{Binding InfoMessage,Mode=TwoWay}"
+                 Margin="5"
                  VerticalAlignment="Stretch" Grid.Row="2" Grid.ColumnSpan="2"
                  Grid.Column="0"
+                 Background="LightGray"
                  VerticalScrollBarVisibility="Auto"
                  IsReadOnly="True" />
         <TextBlock Text="{Binding Version}"
                    VerticalAlignment="Center" HorizontalAlignment="Right"
                    FontSize="8"
                    Margin="5"
+                   FontStretch="SemiCondensed"
                    FontWeight="SemiBold" Grid.Row="3" Grid.Column="1" />
     </Grid>
 </Window>

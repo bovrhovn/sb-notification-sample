@@ -8,6 +8,7 @@
         <Title>Sb Notifier Device Demo</Title>
         <Authors>Bojan Vrhovnik</Authors>
         <Description>sample app to demonstrate how to use Device to register and to communicate with IotHub</Description>
+        <AssemblyVersion>1.0.0.1</AssemblyVersion>
     </PropertyGroup>
 
     <ItemGroup>

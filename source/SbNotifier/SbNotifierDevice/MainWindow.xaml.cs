@@ -11,7 +11,7 @@ namespace SbNotifierDevice
             Loaded += async (window, parameters) =>
             {
                 var mainPageViewModel = new MainPageViewModel();
-                await mainPageViewModel.RegisterDeviceMethodCallAsync();
+                await mainPageViewModel.RegisterDeviceAsync();
                 DataContext = mainPageViewModel;
             };
         }
