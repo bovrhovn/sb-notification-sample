@@ -33,6 +33,14 @@
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </Content>
+      <Content Update="wwwroot\lib\jquery.unobtrusive-ajax.js">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+      <Content Update="wwwroot\lib\jquery.unobtrusive-ajax.min.js">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>
@@ -41,6 +49,7 @@
       <PackageReference Include="Microsoft.Azure.EventHubs" Version="4.2.0" />
       <PackageReference Include="Microsoft.Azure.NotificationHubs" Version="3.3.0" />
       <PackageReference Include="Microsoft.Azure.SignalR" Version="1.4.3" />
+      <PackageReference Include="Microsoft.jQuery.Unobtrusive.Ajax" Version="3.2.6" />
     </ItemGroup>
 
 </Project>

@@ -8,42 +8,67 @@
 <h1>
     See messages as they flow to devices
 </h1>
+<div class="col-md-12 mb-2">
+    <a data-ajax="true"
+       data-ajax-url="/partial"
+       class="mr-2"
+       data-ajax-loading="#spinner">
+        Click to get data from devices
+    </a>
+    <span id="spinner" style="display:none;">
+        <i class="fas fa-spinner fa-spin"></i>
+    </span>
+    <form method="post">
+        <button type="submit" class="btn btn-light">Cancel</button>
+    </form>
+</div>
+<table class="table">
+    @foreach (var partition in Model.Partitions)
+    {
+        <tr>
+            <td>
+                Partition
+            </td>
+            <td>@partition</td>
+        </tr>
+    }
+</table>
 
-<div id="messages"></div>
+<div class="col-md-12 mb-3" id="messages"></div>
 
 @section Scripts
 {
-     <script type="text/javascript" src="~/js/signalr.min.js"></script>
-    
-        <!--Add script to update the page and send messages.-->
-        <script type="text/javascript">
+    <script src="~/lib/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript" src="~/js/signalr.min.js"></script>
+
+    <script type="text/javascript">
             document.addEventListener('DOMContentLoaded', function () {
                  function createMessageEntry(encodedName, encodedMsg) {
-                                const entry = document.createElement('div');
-                                entry.classList.add("message-entry");
-                                if (encodedName === "_SYSTEM_") {
-                                    entry.innerHTML = encodedMsg;
-                                    entry.classList.add("text-center");
-                                    entry.classList.add("system-message");
-                                } else if (encodedName === "_BROADCAST_") {
-                                    entry.classList.add("text-center");
-                                    entry.innerHTML = `<div class="text-center broadcast-message">${encodedMsg}</div>`;
-                                } else {
-                                    entry.innerHTML = `<div class="message-avatar pull-left">${encodedName}</div>` +
-                                        `<div class="message-content pull-left">${encodedMsg}<div>`;
-                                }
-                                return entry;
+                    const entry = document.createElement('div');
+                    entry.classList.add("message-entry");
+                    if (encodedName === "_SYSTEM_") {
+                        entry.innerHTML = encodedMsg;
+                        entry.classList.add("text-center");
+                        entry.classList.add("system-message");
+                    } else if (encodedName === "_BROADCAST_") {
+                        entry.classList.add("text-center");
+                        entry.innerHTML = `<div class="text-center broadcast-message">${encodedMsg}</div>`;
+                    } else {
+                        entry.innerHTML = `<div class="message-avatar pull-left">${encodedName}</div>` +
+                            `<div class="message-content pull-left">${encodedMsg}<div>`;
+                    }
+                    return entry;
                  }
                  
                  function bindConnectionMessage(connection) {
-                    var messageCallback = function(name, message) {
+                    let messageCallback = function(name, message) {
                         if (!message) return;
                         // Html encode display name and message.
-                        var encodedName = "_BROADCAST_";
-                        var encodedMsg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                        var messageEntry = createMessageEntry(encodedName, encodedMsg);
+                        const encodedName = "_BROADCAST_";
+                        const encodedMsg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                        const messageEntry = createMessageEntry(encodedName, encodedMsg);
                                     
-                        var messageBox = document.getElementById('messages');
+                        const messageBox = document.getElementById('messages');
                         messageBox.appendChild(messageEntry);
                         messageBox.scrollTop = messageBox.scrollHeight;
                     };
@@ -56,12 +81,12 @@
                     if (error && error.message) {
                         console.error(error.message);
                     }
-                    var modal = document.getElementById('myModal');
+                    const modal = document.getElementById('myModal');
                     modal.classList.add('in');
                     modal.style = 'display: block;';
                 }
     
-                var connection = new signalR.HubConnectionBuilder()
+                let connection = new signalR.HubConnectionBuilder()
                                             .withUrl('/notification')
                                             .build();
                 bindConnectionMessage(connection);
@@ -72,4 +97,3 @@
             });
         </script>
 }
-

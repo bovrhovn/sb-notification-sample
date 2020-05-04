@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Azure.EventHubs;
@@ -16,6 +17,7 @@ namespace SbNotifierDashboard.Pages.Notification
     {
         private readonly IHubContext<NotificationHub> hubContext;
         private readonly EventHubClient eventHubClient;
+        private readonly CancellationTokenSource cts;
 
         public HistoryPageModel(IOptions<IotOptions> optionsValue, IHubContext<NotificationHub> hubContext)
         {
@@ -23,16 +25,19 @@ namespace SbNotifierDashboard.Pages.Notification
             var connectionString = new EventHubsConnectionStringBuilder(
                 new Uri(optionsValue.Value.EventHubsCompatibleEndpoint),
                 optionsValue.Value.EventHubName, "service", optionsValue.Value.SasKey);
+            cts = new CancellationTokenSource();
             eventHubClient = EventHubClient.CreateFromConnectionString(connectionString.ToString());
         }
+
+        public string[] Partitions { get; set; }
 
         public async Task OnGetAsync()
         {
             var runtimeInfo = await eventHubClient.GetRuntimeInformationAsync();
             var d2cPartitions = runtimeInfo.PartitionIds;
 
-            var cts = new CancellationTokenSource();
-
+            Partitions = d2cPartitions;
+            
             var tasks = new List<Task>();
             foreach (string partition in d2cPartitions)
             {
@@ -43,6 +48,37 @@ namespace SbNotifierDashboard.Pages.Notification
                 $"Starting to listen on {d2cPartitions.Length} partitions", cts.Token);
             // Wait for all the PartitionReceivers to finsih.
             Task.WaitAll(tasks.ToArray());
+        }
+        
+        public async Task<IActionResult> OnGetPartialAsync()
+        {
+            var runtimeInfo = await eventHubClient.GetRuntimeInformationAsync();
+            var d2cPartitions = runtimeInfo.PartitionIds;
+
+            var tasks = new List<Task>();
+            foreach (string partition in d2cPartitions)
+            {
+                tasks.Add(ReceiveMessagesFromDeviceAsync(partition, cts.Token));
+            }
+
+            await hubContext.Clients.All.SendAsync("broadcastMessage",
+                $"Starting to listen on {d2cPartitions.Length} partitions", cts.Token);
+            
+            // Wait for all the PartitionReceivers to finsih.
+            Task.WaitAll(tasks.ToArray());
+            
+            return new PartialViewResult
+            {
+                ViewData = this.ViewData
+            };
+        }
+
+        public async Task<IActionResult> OnPost()
+        {
+            string message = "Streaming canceled";
+            await hubContext.Clients.All.SendAsync("broadcastMessage", message, cancellationToken: cts.Token);
+            cts.Cancel();
+            return Page();
         }
 
         private async Task ReceiveMessagesFromDeviceAsync(string partition, CancellationToken ct)
@@ -62,20 +98,24 @@ namespace SbNotifierDashboard.Pages.Notification
                 // If there is data in the batch, process it.
                 if (events == null) continue;
 
-                foreach (EventData eventData in events)
+                foreach (var eventData in events)
                 {
-                    string data = Encoding.UTF8.GetString(eventData.Body.Array);
-                    message += $"Message received on partition {partition} {data}<br/>";
-                    message += "Application properties (set by device):<br/>";
-                    foreach (var prop in eventData.Properties)
+                    var bodyArray = eventData.Body.Array;
+                    if (bodyArray != null)
                     {
-                        message += $"{prop.Key} {prop.Value}<br/>";
-                    }
+                        string data = Encoding.UTF8.GetString(bodyArray);
+                        message += $"Message received on partition {partition} {data}<br/>";
+                        message += "Application properties (set by device):<br/>";
+                        foreach (var prop in eventData.Properties)
+                        {
+                            message += $"{prop.Key} {prop.Value}<br/>";
+                        }
 
-                    message += "System properties (set by IoT Hub):<br/>";
-                    foreach (var prop in eventData.SystemProperties)
-                    {
-                        message += $"{prop.Key} {prop.Value}<br/>";
+                        message += "System properties (set by IoT Hub):<br/>";
+                        foreach (var prop in eventData.SystemProperties)
+                        {
+                            message += $"{prop.Key} {prop.Value}<br/>";
+                        }
                     }
                 }
 
