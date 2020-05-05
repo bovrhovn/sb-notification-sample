@@ -39,7 +39,15 @@
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:LockScreen Notification="badge" BadgeLogo="Assets\24x24.png"/>
       </uap:VisualElements>
+      <Extensions>
+        <Extension Category="windows.backgroundTasks" StartPage="PushNotificationBackgroundTask.cs">
+          <BackgroundTasks>
+            <Task Type="pushNotification"/>
+          </BackgroundTasks>
+        </Extension>
+      </Extensions>
     </Application>
   </Applications>
 
