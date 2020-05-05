@@ -1,6 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SbNotifierDashboard", "SbNotifierDashboard\SbNotifierDashboard.csproj", "{38D11F28-D0DD-4496-9129-C86FA5655FC4}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SbNotifierDashboard", "SbNotifierDashboard\SbNotifierDashboard.csproj", "{38D11F28-D0DD-4496-9129-C86FA5655FC4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SbNotifierUwp", "SbNotifierUwp\SbNotifierUwp.csproj", "{4B5A53B0-8145-4B33-86C6-593ED4AE6396}"
 EndProject
@@ -16,7 +19,14 @@ Global
 		{38D11F28-D0DD-4496-9129-C86FA5655FC4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4B5A53B0-8145-4B33-86C6-593ED4AE6396}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{4B5A53B0-8145-4B33-86C6-593ED4AE6396}.Debug|Any CPU.Build.0 = Debug|x86
+		{4B5A53B0-8145-4B33-86C6-593ED4AE6396}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{4B5A53B0-8145-4B33-86C6-593ED4AE6396}.Release|Any CPU.ActiveCfg = Release|x86
 		{4B5A53B0-8145-4B33-86C6-593ED4AE6396}.Release|Any CPU.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BBCA0781-6F45-4FA4-A119-36BCC35D2235}
 	EndGlobalSection
 EndGlobal

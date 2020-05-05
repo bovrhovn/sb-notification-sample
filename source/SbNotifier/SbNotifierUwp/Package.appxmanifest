@@ -42,7 +42,7 @@
         <uap:LockScreen Notification="badge" BadgeLogo="Assets\24x24.png"/>
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" StartPage="PushNotificationBackgroundTask.cs">
+        <Extension Category="windows.backgroundTasks"  EntryPoint="SbNotifierUwp.Tasks.PushNotificationBackgroundTask">
           <BackgroundTasks>
             <Task Type="pushNotification"/>
           </BackgroundTasks>
