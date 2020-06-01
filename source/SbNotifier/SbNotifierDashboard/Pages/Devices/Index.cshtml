@@ -8,13 +8,13 @@
 <h1>
     Query devices
 </h1>
+<div class="col-md-12">
+    <a class="btn btn-lg btn-info float-right" asp-page="/Devices/Generate">Generate devices</a>
+</div>
 <p class="text-success font-weight-bold text-xl-left">
     @Model.InfoText
 </p>
-<div class="col-md-12 mt-2">
-    <a asp-page="/Devices/Generate" class="btn btn-lg btn-info float-right">Generate devices</a>
-</div>
-<div class="col-md-12 mb-3">
+<div class="col-md-12 mb-3 mt-3">
     <form method="get">
         <div class="form-group">
             <label asp-for="Query">Enter tag to search the device (currently only one tag)</label>
@@ -45,14 +45,17 @@
                     @deviceInfo.Name
                 </td>
                 <td>
-                    <span id="load{@deviceInfo.Id}">Load data</span>
+                    <span id='load@deviceInfo.Id'>Load data</span>
                     <script type="text/javascript">
-                        document.getElementById('load{@deviceInfo.Id}').addEventListener('click', () => {
-                                fetch('/Index?handler=ConnectionString&Id={@deviceInfo.Id}')                                            
-                                    .then((result) => {
-                                        document.getElementById('load{@deviceInfo.Id}').innerHTML = result.text();
-                                    });
-                            });
+                        document.getElementById('load@deviceInfo.Id').addEventListener('click', () => {
+                                fetch('/Devices/Index?handler=ConnectionString&Id=@deviceInfo.Id') 
+                                    .then(result=>{
+                                        return result.text();
+                                    })                                           
+                                    .then(text => {
+                                        console.log(text);
+                                        document.getElementById('load@deviceInfo.Id').innerHTML = text;
+                                    })});
                     </script>
                 </td>
             </tr>

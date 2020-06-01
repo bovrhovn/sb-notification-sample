@@ -16,7 +16,7 @@ namespace SbNotifierDashboard.Pages.Devices
         [BindProperty, TempData] public string InfoText { get; set; }
         public PaginatedList<DeviceInfo> Devices { get; set; }
         [BindProperty(SupportsGet = true)] public string Query { get; set; }
-        [BindProperty(SupportsGet =true)] public int Id { get; set; }
+        [BindProperty(SupportsGet =true)] public string Id { get; set; }
         private readonly RegistryManager registryManager;
         private string connectionStringTemplate = "HostName={0}.azure-devices.net;DeviceId={1};SharedAccessKey={2}";
         private readonly IotOptions optionsValue;
@@ -33,6 +33,7 @@ namespace SbNotifierDashboard.Pages.Devices
             var deviceQuery = "SELECT * FROM devices";
             if (!string.IsNullOrEmpty(Query)) deviceQuery += $" WHERE tags.location='{deviceQuery}'";
             var query = registryManager.CreateQuery(deviceQuery, optionsValue.PageSize);
+            
             var list = new List<DeviceInfo>();
             while (query.HasMoreResults)
             {
@@ -52,9 +53,10 @@ namespace SbNotifierDashboard.Pages.Devices
             InfoText = $"{list.Count} devices loaded!";
         }
 
-        public ContentResult OnGetConnectionString()
+        public async Task<IActionResult> OnGetConnectionString()
         {
-            var connString = string.Format(connectionStringTemplate, optionsValue.Name, Id, "");
+            var device = await registryManager.GetDeviceAsync(Id);
+            var connString = string.Format(connectionStringTemplate, optionsValue.Name, Id, device.Authentication.SymmetricKey.PrimaryKey);
             return Content(connString);
         }
     }
