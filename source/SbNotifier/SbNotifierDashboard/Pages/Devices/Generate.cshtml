@@ -1,0 +1,28 @@
+@page
+@model SbNotifierDashboard.Pages.Devices.GeneratePageModel
+
+@{
+    ViewData["Title"] = "Devices preview";
+}
+
+<h1>
+    Check devices and query them
+</h1>
+
+<div class="col-md-12 mb-3">
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="Tags">Enter random tags to be added to devices (separate with ;)</label>
+            <input type="text" class="form-control" asp-for="Tags">
+        </div>
+        <div class="form-group">
+            <label asp-for="Number">Enter device number</label>
+            <input type="text" class="form-control" asp-for="Number">
+        </div>
+        <button type="submit" class="btn btn-primary">generate devices</button>
+    </form>
+</div>
+
+<p class="text-success font-weight-bold text-xl-left">
+    @Model.InfoText
+</p>

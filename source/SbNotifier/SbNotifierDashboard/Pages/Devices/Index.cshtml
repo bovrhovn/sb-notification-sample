@@ -1,0 +1,71 @@
+@page
+@model SbNotifierDashboard.Pages.Devices.IndexPageModel
+
+@{
+    ViewData["Title"] = "Devices preview";
+}
+
+<h1>
+    Check devices and query them
+</h1>
+
+<p class="text-success font-weight-bold text-xl-left">
+    @Model.InfoText
+</p>
+<div class="col-md-12">
+    <a asp-page="/Devices/Generate" class="btn btn-lg btn-info float-right">Generate devices</a>
+</div>
+<div class="col-md-12 mb-3">
+    <form method="get">
+        <div class="form-group">
+            <label asp-for="Query">Enter tag to search the device (currently only one tag)</label>
+            <input type="text" class="form-control" asp-for="Query">
+        </div>
+        <button type="submit" class="btn btn-primary">Search devices</button>
+    </form>
+</div>
+
+@if (Model.Devices.Any())
+{
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Connection string (click to get)</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var deviceInfo in Model.Devices)
+        {
+            <tr>
+                <td>
+                    @deviceInfo.Id
+                </td>
+                <td>
+                    @deviceInfo.Name
+                </td>
+                <td>
+                    //popup window TBD
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <nav aria-label="Devices Count">
+        <ul class="pagination">
+            @if (Model.Devices.HasPreviousPage)
+            {
+                <li class="page-item"><a class="page-link" asp-page="/Devices/Index" asp-route-pageIndex="@(Model.Devices.PageIndex - 1)">Previous </a></li>
+            }
+            @if (Model.Devices.HasNextPage)
+            {
+                <li class="page-item"><a class="page-link" asp-page="/Devices/Index" asp-route-pageIndex="@(Model.Devices.PageIndex + 1)">Next</a></li>
+            }
+        </ul>
+    </nav>
+}
+else
+{
+    <p class="text-info">No devices registered! Check Iot hub.</p>
+}

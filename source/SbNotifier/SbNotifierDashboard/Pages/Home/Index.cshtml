@@ -4,7 +4,6 @@
     ViewData["Title"] = "Home page";
 }
 
-
 <h1 class="display-4">Welcome to notifier dashboard</h1>
 <p>In order to send notification, please use the following options:</p>
 <ul>
@@ -16,5 +15,11 @@
     </li>
     <li>
         Check notification history and response - click <a asp-page="/Notification/History">here</a>
+    </li>
+    <li>
+        Do querying on devices (documentation link <a href="https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-query-language" target="_blank">here</a>) - click <a asp-page="/Devices/Index">here</a>
+    </li>
+    <li>
+        Generate devices - click <a asp-page="/Devices/Generate">here</a>
     </li>
 </ul>

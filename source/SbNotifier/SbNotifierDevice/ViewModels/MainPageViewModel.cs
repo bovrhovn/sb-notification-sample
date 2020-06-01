@@ -33,14 +33,16 @@ namespace SbNotifierDevice.ViewModels
             }
             else
             {
-                var device = await registryManager.GetDeviceAsync(deviceId) ??
-                             await registryManager.AddDeviceAsync(new Device(deviceId));
+                var currentDevice = new Device(deviceId);
+                
+                var device = await registryManager.GetDeviceAsync(deviceId, cancellationToken) ??
+                             await registryManager.AddDeviceAsync(currentDevice, cancellationToken);
                 InfoMessage =
                     $"Device registered and is {(device.ConnectionState == DeviceConnectionState.Connected ? "connected" : "disconnected")}{Environment.NewLine}";
 
                 deviceClient ??= DeviceClient.CreateFromConnectionString(Constants.IotHubConnectionString, DeviceId,
                     TransportType.Mqtt);
-                await deviceClient.SetMethodHandlerAsync("UpdateRequested", UpdateRequestedMethod, null);
+                await deviceClient.SetMethodHandlerAsync("UpdateRequested", UpdateRequestedMethod, null, cancellationToken);
             }
         }
 
@@ -80,8 +82,8 @@ namespace SbNotifierDevice.ViewModels
             }
         }
 
-        public ICommand RegisterCommand { get; private set; }
-        public ICommand ListenCommand { get; private set; }
+        public ICommand RegisterCommand { get; }
+        public ICommand ListenCommand { get; }
 
         private Task<MethodResponse> UpdateRequestedMethod(MethodRequest methodRequest, object userContext)
         {

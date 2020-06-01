@@ -15,10 +15,12 @@ namespace SbNotifierDashboard.Pages.Notification
     {
         private readonly RegistryManager registryManager;
         private readonly ServiceClient serviceClient;
-
+        private readonly int pageSize;
+        
         public IotPageModel(IOptions<IotOptions> optionsValue)
         {
             var valueConnectionString = optionsValue.Value.ConnectionString;
+            pageSize = optionsValue.Value.PageSize;
             registryManager = RegistryManager.CreateFromConnectionString(valueConnectionString);
             serviceClient = ServiceClient.CreateFromConnectionString(valueConnectionString);
         }
@@ -31,7 +33,7 @@ namespace SbNotifierDashboard.Pages.Notification
 
         public async Task OnGetAsync()
         {
-            var query = registryManager.CreateQuery("SELECT * FROM devices", 100);
+            var query = registryManager.CreateQuery("SELECT * FROM devices", pageSize);
             var list = new List<DeviceInfo>();
             while (query.HasMoreResults)
             {
