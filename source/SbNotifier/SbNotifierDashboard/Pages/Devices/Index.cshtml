@@ -6,13 +6,12 @@
 }
 
 <h1>
-    Check devices and query them
+    Query devices
 </h1>
-
 <p class="text-success font-weight-bold text-xl-left">
     @Model.InfoText
 </p>
-<div class="col-md-12">
+<div class="col-md-12 mt-2">
     <a asp-page="/Devices/Generate" class="btn btn-lg btn-info float-right">Generate devices</a>
 </div>
 <div class="col-md-12 mb-3">
@@ -46,7 +45,15 @@
                     @deviceInfo.Name
                 </td>
                 <td>
-                    //popup window TBD
+                    <span id="load{@deviceInfo.Id}">Load data</span>
+                    <script type="text/javascript">
+                        document.getElementById('load{@deviceInfo.Id}').addEventListener('click', () => {
+                                fetch('/Index?handler=ConnectionString&Id={@deviceInfo.Id}')                                            
+                                    .then((result) => {
+                                        document.getElementById('load{@deviceInfo.Id}').innerHTML = result.text();
+                                    });
+                            });
+                    </script>
                 </td>
             </tr>
         }
@@ -56,11 +63,15 @@
         <ul class="pagination">
             @if (Model.Devices.HasPreviousPage)
             {
-                <li class="page-item"><a class="page-link" asp-page="/Devices/Index" asp-route-pageIndex="@(Model.Devices.PageIndex - 1)">Previous </a></li>
+                <li class="page-item">
+                    <a class="page-link" asp-page="/Devices/Index" asp-route-pageIndex="@(Model.Devices.PageIndex - 1)">Previous </a>
+                </li>
             }
             @if (Model.Devices.HasNextPage)
             {
-                <li class="page-item"><a class="page-link" asp-page="/Devices/Index" asp-route-pageIndex="@(Model.Devices.PageIndex + 1)">Next</a></li>
+                <li class="page-item">
+                    <a class="page-link" asp-page="/Devices/Index" asp-route-pageIndex="@(Model.Devices.PageIndex + 1)">Next</a>
+                </li>
             }
         </ul>
     </nav>

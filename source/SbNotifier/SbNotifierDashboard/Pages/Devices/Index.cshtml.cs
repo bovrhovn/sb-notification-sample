@@ -15,10 +15,10 @@ namespace SbNotifierDashboard.Pages.Devices
     {
         [BindProperty, TempData] public string InfoText { get; set; }
         public PaginatedList<DeviceInfo> Devices { get; set; }
-        [BindProperty] public string Query { get; set; }
-
+        [BindProperty(SupportsGet = true)] public string Query { get; set; }
+        [BindProperty(SupportsGet =true)] public int Id { get; set; }
         private readonly RegistryManager registryManager;
-        //private string connectionStringTemplate = "HostName={0}.azure-devices.net;DeviceId={1};SharedAccessKey={2}";
+        private string connectionStringTemplate = "HostName={0}.azure-devices.net;DeviceId={1};SharedAccessKey={2}";
         private readonly IotOptions optionsValue;
 
         public IndexPageModel(IOptions<IotOptions> optionsValue)
@@ -50,6 +50,12 @@ namespace SbNotifierDashboard.Pages.Devices
             Devices = PaginatedList<DeviceInfo>.Create(list.AsQueryable(), pageIndex ?? 1, optionsValue.PageSize);
 
             InfoText = $"{list.Count} devices loaded!";
+        }
+
+        public ContentResult OnGetConnectionString()
+        {
+            var connString = string.Format(connectionStringTemplate, optionsValue.Name, Id, "");
+            return Content(connString);
         }
     }
 }
