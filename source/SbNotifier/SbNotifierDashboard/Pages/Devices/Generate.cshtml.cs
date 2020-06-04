@@ -21,22 +21,17 @@ namespace SbNotifierDashboard.Pages.Devices
             serviceClient = ServiceClient.CreateFromConnectionString(valueConnectionString);
         }
         
-        public void OnPostAsync()
+        public IActionResult OnPostAsync()
         {
-            if (!string.IsNullOrEmpty(Tags))
+            if (string.IsNullOrEmpty(Tags))
             {
-                var tags = Tags.Split(";");
-                if (tags.Length == 0)
-                {
-                    //
-                }
-                else
-                {
-                    //add randomly 
-                }
+                InfoText = "Tags should not be empty - enter at least one item";
+                return RedirectToPage("Index");
             }
+
+            var tags = Tags.Split(";");
+            //generate devices
+            return RedirectToPage("Index");
         }
-        
-        
     }
 }
