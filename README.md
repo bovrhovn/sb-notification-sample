@@ -10,7 +10,7 @@ When you open solution in your favorite editor, navigate to **Pages** folder and
 
 In order for making it work, you need [Azure Iothub](https://azure.microsoft.com/en-us/services/iot-hub/) account and you need to add connection string in the appSettings.json file.
 
-![settings](https://csacoresettings.blob.core.windows.net/public/iothub-generate-device.png)
+![settings](https://csacoresettings.blob.core.windows.net/public/iothub-generate-settings.png)
 
 After you have done that, you run the application (either via favorite editor or via [CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-run)), select Generate or Query devices in menu.
 
