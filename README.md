@@ -8,7 +8,7 @@ When you open solution in your favorite editor, navigate to **Pages** folder and
 
 ![pages for generation](https://csacoresettings.blob.core.windows.net/public/iothub-generate-device.png)
 
-In order for making it work, you need [Azure Iothub](https://azure.microsoft.com/en-us/services/iot-hub/) account and you need to add connection string in the appSettings.json file.
+In order for making it work, you need [Azure Iothub](https://azure.microsoft.com/en-us/services/iot-hub/) account and you need to add connection string (setting **ConnectionString**) and name (setting **Name**) in the appSettings.json file.
 
 ![settings](https://csacoresettings.blob.core.windows.net/public/iothub-generate-settings.png)
 
