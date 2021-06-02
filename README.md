@@ -21,10 +21,10 @@ In the Iot branch you have 2 applications:
 To setup web application, you need to configure [appSettings.json](https://github.com/bovrhovn/sb-notification-sample/blob/iothub/source/SbNotifier/SbNotifierDashboard/appsettings.json) file. All the information is available via portal or via [Azure IOT Cli](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-create-using-cli).
 
 In order to continue, you will need [Azure IoT Hub](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-create-through-portal). After that is done, you can copy values from Azure Iot Hub into configuration files.
-![Azure IoT Hub policies](https://csacoresettings.blob.core.windows.net/public/IotAccessPolicies_1.png)
+![Azure IoT Hub policies](https://webeudatastorage.blob.core.windows.net/web/IotAccessPolicies_1.png)
 
 The connection string is available, when you select a policy.
-![Connection String](https://csacoresettings.blob.core.windows.net/public/IotAccessPolicies_2.png)
+![Connection String](https://webeudatastorage.blob.core.windows.net/web/IotAccessPolicies_2.png)
 
 In order to use Signalr, you will need to setup Azure SignalR. Check [this tutorial](https://docs.microsoft.com/en-us/azure/azure-signalr/signalr-quickstart-dotnet-core) on how to do that. Replace the connection string as explained [here](https://docs.microsoft.com/en-us/azure/azure-signalr/signalr-quickstart-dotnet-core#add-azure-signalr-to-the-web-app).
 
@@ -32,7 +32,7 @@ In order to use Signalr, you will need to setup Azure SignalR. Check [this tutor
 To use WPF app, you will need to enter the connection string for Azure IoT Hub [here](https://github.com/bovrhovn/sb-notification-sample/blob/iothub/source/SbNotifier/SbNotifierDevice/Helpers/Constants.cs).
 
 You can find the connection string in Azure Policy (the same as you did for web app).
-![Connection String](https://csacoresettings.blob.core.windows.net/public/IotAccessPolicies_2.png)
+![Connection String](https://webeudatastorage.blob.core.windows.net/web/IotAccessPolicies_2.png)
 
 ## Conclusion
 If you find any challenges, submit an issue.
