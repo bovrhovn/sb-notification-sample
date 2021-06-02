@@ -6,15 +6,15 @@ This branch (devices) focuses on generating and query devices (with custom defin
 
 When you open solution in your favorite editor, navigate to **Pages** folder and inside you will find 2 pages - **Generate** (generate device with custom tag) and **Index** (query devices with different tags and getting connection string to connect to that specific device).
 
-![pages for generation](https://csacoresettings.blob.core.windows.net/public/iothub-generate-device.png)
+![pages for generation](https://webeudatastorage.blob.core.windows.net/web/iothub-generate-device.png)
 
 In order for making it work, you need [Azure Iothub](https://azure.microsoft.com/en-us/services/iot-hub/) account and you need to add connection string (setting **ConnectionString**) and name (setting **Name**) in the appSettings.json file.
 
-![settings](https://csacoresettings.blob.core.windows.net/public/iothub-generate-settings.png)
+![settings](https://webeudatastorage.blob.core.windows.net/web/iothub-generate-settings.png)
 
 After you have done that, you run the application (either via favorite editor or via [CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-run)), select Generate or Query devices in menu.
 
-![menu options](https://csacoresettings.blob.core.windows.net/public/iothub-generate-menu-option.png)
+![menu options](https://webeudatastorage.blob.core.windows.net/web/iothub-generate-menu-option.png)
 
 Technology used:
 1. [ASP.NET Core 3.1](https://asp.net)
