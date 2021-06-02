@@ -22,13 +22,13 @@ In the master branch you have 2 applications:
 In order to use Web Application, you will need to setup [Azure Notification Hub](https://docs.microsoft.com/en-us/azure/notification-hubs/create-notification-hub-portal). 
 
 When that is finished, you will need to replace connection string in the [appSettings.json](https://github.com/bovrhovn/sb-notification-sample/blob/master/source/SbNotifier/SbNotifierDashboard/appsettings.json). 
-![appSettings.json - image](https://csacoresettings.blob.core.windows.net/public/AzureNotificationHub_0.png)
+![appSettings.json - image](https://webeudatastorage.blob.core.windows.net/web/public/AzureNotificationHub_0.png)
 
 Go to Notification Hub and select Access Policies.
-![Access Policies](https://csacoresettings.blob.core.windows.net/public/NotificationHubAccessPolicies_1.png)
+![Access Policies](https://webeudatastorage.blob.core.windows.net/web/NotificationHubAccessPolicies_1.png)
 
 Select appropriate policy and copy connection string. Replace the value in [appSettings.json](https://github.com/bovrhovn/sb-notification-sample/blob/master/source/SbNotifier/SbNotifierDashboard/appsettings.json) with copied value.
-![access policy connection string](https://csacoresettings.blob.core.windows.net/public/NotificationHubAccessPolicies_2.png)
+![access policy connection string](https://webeudatastorage.blob.core.windows.net/web/NotificationHubAccessPolicies_2.png)
 
 ### UWP settings
 To receive notifications, you will need to follow [this instructions](https://docs.microsoft.com/en-us/azure/notification-hubs/notification-hubs-windows-store-dotnet-get-started-wns-push-notification). After success. replace the values in [Secrets.cs](https://github.com/bovrhovn/sb-notification-sample/blob/master/source/SbNotifier/SbNotifierUwp/Helpers/Secrets.cs) with NotificationHub name and connection string (which you already used in the web page part)
